@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="None">
+        
+        
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <title>TiProjects Docs</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body class="homepage">
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href=".">TiProjects Docs</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#tiprojects" class="nav-link">Добро пожаловать, добро пожаловать в TiProjects!</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#api" class="nav-link">Основные пути, не относящиеся к API</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#api_1" class="nav-link">API авторизации</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#api_2" class="nav-link">API Комментариев</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#api_3" class="nav-link">API файлов</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#api_4" class="nav-link">API информации</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#pi" class="nav-link">АPI Загрузки файлов</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="tiprojects">Добро пожаловать, добро пожаловать в TiProjects!</h1>
+<p>Это сайт-документация по API проекта TiTruba.</p>
+<h2 id="api">Основные пути, не относящиеся к API</h2>
+<ul>
+<li><code>/admin/*</code> - основная админ-панель, за исключением таблицы юзеров.</li>
+<li><code>/kuklovody/*</code> - коварной рукой управляем беззащитныыми юзверями.</li>
+<li><code>/dashboard</code> - статус сайта.</li>
+<li><code>/</code> - главная страница сайта, простой html плейсхолдер.</li>
+</ul>
+<h2 id="api_1">API авторизации</h2>
+<pre><code>/api/v1/login - POST, принимает email, nick, password как application/json. Возвращает json, либо это будет {200, "user exist", user.ID}, либо {403, "user not exist"}
+/api/v1/registration - POST, принимает password длиной 64, email и nick, длинной 3, как application/json. Возвращает json, либо {200, "user was created successfully"}, либо {500, "Error, parameters are too short"}
+</code></pre>
+<h2 id="api_2">API Комментариев</h2>
+<pre><code>/api/v1/add-comment - POST, принемает userId, videoId, comment, как application/json; Возвращает json, либо {200, "Comment was added"}, либо exeption и фронт падает.
+/api/v1/getComments/:id - GET, как :id принемает id видео; Возвращает в JSON массив из ста комментариев.
+</code></pre>
+<h2 id="api_3">API файлов</h2>
+<pre><code>/api/v1/uploads/users/:id/videos/:hash/cover/:filename - GET запрос. Возвращает файл обложки видео юзверя.
+/api/v1/uploads/users/:id/videos/:hash/video/:filename - GET запрос. Возвращает файл видео пользователя.
+
+/api/v1/uploads/users/:id/cover/:hash/:filename - GET запрос. Возвращает файл обложки профиля пользователя.
+/api/v1/uploads/users/:id/avatar/:hash/:filename - GET запрос. Возвращает аватар профиля пользователя.
+</code></pre>
+<h2 id="api_4">API информации</h2>
+<pre><code>/api/v1 - GET запрос, возвращает максимум 50 видосиков. Возвращяет как json, массивом.
+/api/v1/getVideo/:id - GET запрос, возвращает информацию по конкретному видео. Возвращает обьект Video, кол-во дизлайков/лайков.
+/api/v1/getUser/:id - GET запрос. Возвращает json информацию о плльзователе, аватарку, обложку. Подсчет сабскриберов и видосиков.
+/api/v1/existNick/:nick - GET запрос. Возвращает json, либо {200, user.Nick}, либо {404, "Nick not exist"}.Этот путь нужен для для проверки существования такого ника, чтоб не было ошибки при создании юзверя в БД.
+/api/v1/getAllUserVideos/:id - Возвращает JSONом массив всех видео пользователя по его Id.
+</code></pre>
+<h2 id="pi">АPI Загрузки файлов</h2>
+<pre><code>/api/v1/upload-video/by/:id - POST загрузка видео КАК ФОРМЫ. Принемает name, about (текстовые поля).
+/api/v1/upload-profile-photo/by/:id - POST загрузка фото и обложки профиля пользователя как ФОРМА! Возвращает статус 200 либо ламает все к чертям собачьим.
+/api/v1/change-information - POST запрос.Как application/json. Принемает nick, id, email, about; Меняют эти параметры в БД.
+/api/v1/change-password - POST запрос, принемате данные в JSON. oldPass и newPass, длинной в 64 символа (хэш)
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = ".",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="js/base.js" defer></script>
+        <script src="search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 1.2.3
+Build Date UTC : 2021-12-24 16:38:46.831079+00:00
+-->
