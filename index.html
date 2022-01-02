@@ -95,8 +95,8 @@
 <li><code>/</code> - главная страница сайта, простой html плейсхолдер.</li>
 </ul>
 <h2 id="api_1">API авторизации</h2>
-<pre><code>/api/v1/login - POST, принимает email, nick, password как application/json. Возвращает json, либо это будет {200, "user exist", user.ID}, либо {403, "user not exist"}
-/api/v1/registration - POST, принимает password длиной 64, email и nick, длинной 3, как application/json. Возвращает json, либо {200, "user was created successfully"}, либо {500, "Error, parameters are too short"}
+<pre><code>f0615495.xsph.ru/api/v1/login - POST, принимает email, nick, password как application/json. Возвращает json, либо это будет полный набор данных пользователя, либо "404 User not found :(", либо "too short data"
+f0615495.xsph.ru/api/v1/registration - POST, принимает password длиной 64, email и nick, длинной 3, как application/json. Возвращает json, либо ["Status" =&gt; 200, "Comment" =&gt; "user was created successfully"], либо "too short data"
 </code></pre>
 <h2 id="api_2">API Комментариев</h2>
 <pre><code>/api/v1/add-comment - POST, принемает userId, videoId, comment, как application/json; Возвращает json, либо {200, "Comment was added"}, либо exeption и фронт падает.
@@ -202,5 +202,5 @@
 
 <!--
 MkDocs version : 1.2.3
-Build Date UTC : 2021-12-24 16:38:46.831079+00:00
+Build Date UTC : 2022-01-02 21:22:07.952655+00:00
 -->

@@ -1,0 +1,38 @@
+# Добро пожаловать, добро пожаловать в TiProjects!
+
+Это сайт-документация по API проекта TiTruba.
+
+## Основные пути, не относящиеся к API
+
+* `/admin/*` - основная админ-панель, за исключением таблицы юзеров.
+* `/kuklovody/*` - коварной рукой управляем беззащитныыми юзверями.
+* `/dashboard` - статус сайта.
+* `/` - главная страница сайта, простой html плейсхолдер.
+
+## API авторизации
+    f0615495.xsph.ru/api/v1/login - POST, принимает email, nick, password как application/json. Возвращает json, либо это будет полный набор данных пользователя, либо "404 User not found :(", либо "too short data"
+    f0615495.xsph.ru/api/v1/registration - POST, принимает password длиной 64, email и nick, длинной 3, как application/json. Возвращает json, либо ["Status" => 200, "Comment" => "user was created successfully"], либо "too short data"
+
+## API Комментариев
+    /api/v1/add-comment - POST, принемает userId, videoId, comment, как application/json; Возвращает json, либо {200, "Comment was added"}, либо exeption и фронт падает.
+    /api/v1/getComments/:id - GET, как :id принемает id видео; Возвращает в JSON массив из ста комментариев.
+
+## API файлов
+    /api/v1/uploads/users/:id/videos/:hash/cover/:filename - GET запрос. Возвращает файл обложки видео юзверя.
+    /api/v1/uploads/users/:id/videos/:hash/video/:filename - GET запрос. Возвращает файл видео пользователя.
+
+    /api/v1/uploads/users/:id/cover/:hash/:filename - GET запрос. Возвращает файл обложки профиля пользователя.
+    /api/v1/uploads/users/:id/avatar/:hash/:filename - GET запрос. Возвращает аватар профиля пользователя.
+
+## API информации
+    /api/v1 - GET запрос, возвращает максимум 50 видосиков. Возвращяет как json, массивом.
+    /api/v1/getVideo/:id - GET запрос, возвращает информацию по конкретному видео. Возвращает обьект Video, кол-во дизлайков/лайков.
+    /api/v1/getUser/:id - GET запрос. Возвращает json информацию о плльзователе, аватарку, обложку. Подсчет сабскриберов и видосиков.
+    /api/v1/existNick/:nick - GET запрос. Возвращает json, либо {200, user.Nick}, либо {404, "Nick not exist"}.Этот путь нужен для для проверки существования такого ника, чтоб не было ошибки при создании юзверя в БД.
+    /api/v1/getAllUserVideos/:id - Возвращает JSONом массив всех видео пользователя по его Id.
+
+## АPI Загрузки файлов
+    /api/v1/upload-video/by/:id - POST загрузка видео КАК ФОРМЫ. Принемает name, about (текстовые поля).
+    /api/v1/upload-profile-photo/by/:id - POST загрузка фото и обложки профиля пользователя как ФОРМА! Возвращает статус 200 либо ламает все к чертям собачьим.
+    /api/v1/change-information - POST запрос.Как application/json. Принемает nick, id, email, about; Меняют эти параметры в БД.
+    /api/v1/change-password - POST запрос, принемате данные в JSON. oldPass и newPass, длинной в 64 символа (хэш)
